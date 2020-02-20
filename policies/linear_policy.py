@@ -29,6 +29,11 @@ class Linear(bp.Policy):
         pass
 
     def calculate_best_action(self, state):
+        """
+        Calculates the best action for a given state.
+        :param state: The given state.
+        :return: the best actions found.
+        """
         mx_q_val = 0
         best_action = None
 
