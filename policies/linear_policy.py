@@ -3,6 +3,9 @@ import numpy as np
 
 EPSILON = 0.05
 DATA_REPR_LEN = 20
+DISCOUNT_FACTOR = 0.98
+LEARNING_RATE = 0.05
+
 
 class Linear(bp.Policy):
     """
@@ -15,7 +18,8 @@ class Linear(bp.Policy):
     def init_run(self):
         self.r_sum = 0
         self.epsilon = EPSILON
-
+        self.discount_factor = DISCOUNT_FACTOR
+        self.learning_rate = LEARNING_RATE
         self.weights = np.random.normal((DATA_REPR_LEN,))
 
     def get_state_action_repr(self, state, action):
@@ -44,6 +48,16 @@ class Linear(bp.Policy):
     def learn(self, round, prev_state, prev_action, reward, new_state, too_slow):
 
         # implemet code here... keep rest of code
+
+        best_future_action = self.calculate_best_action(new_state)
+        future_opt_state_repr = self.get_state_action_repr(new_state, best_future_action)
+        future_opt_q_val = self.weights.dot(future_opt_state_repr)
+
+        post_action_state_repr = self.get_state_action_repr(prev_state, prev_action)
+        post_action_q_val = self.weights.dot(post_action_state_repr)
+
+        prediction_error = reward + self.discount_factor * future_opt_q_val - post_action_q_val
+        self.weights -= self.learning_rate * prediction_error * post_action_state_repr
 
         try:
             if round % 100 == 0:
