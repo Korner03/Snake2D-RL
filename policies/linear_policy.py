@@ -2,7 +2,7 @@ from policies import base_policy as bp
 import numpy as np
 
 EPSILON = 0.05
-DATA_REPR_LEN = 20
+DATA_REPR_LEN = 11
 DISCOUNT_FACTOR = 0.98
 LEARNING_RATE = 0.05
 
@@ -20,7 +20,7 @@ class Linear(bp.Policy):
         self.epsilon = EPSILON
         self.discount_factor = DISCOUNT_FACTOR
         self.learning_rate = LEARNING_RATE
-        self.weights = np.random.normal((DATA_REPR_LEN,))
+        self.weights = np.random.randn(DATA_REPR_LEN)
         self.max_radius = np.minimum(self.board_size[0], self.board_size[1]) // 5
 
     def get_state_action_repr(self, state, action):
@@ -57,7 +57,7 @@ class Linear(bp.Policy):
         :param action:
         :return: a
         """
-        min_pos_vec = [np.inf] * 11
+        min_pos_vec = [self.max_radius] * 11
         curr_distance = 0
         board = state[0]
         pos, _ = state[1]
@@ -73,14 +73,13 @@ class Linear(bp.Policy):
 
             for point in curr_points_batch:
                 point_val = board[point[0], point[1]]
-                print(point_val)
-                if min_pos_vec[point_val] == np.inf:
+                if min_pos_vec[point_val] == self.max_radius:
                     min_pos_vec[point_val] = curr_distance
 
             curr_distance += 1
 
         # assert np.inf not in min_pos_vec
-        return min_pos_vec
+        return np.array(min_pos_vec)
 
     def get_pos_neighbors(self, curr_positions, board_size):
         new_positions = []
@@ -98,7 +97,6 @@ class Linear(bp.Policy):
         curr_positions = [initial_pos]
 
         for i in range(limit):
-            print(curr_positions)
             yield curr_positions
             checked_positions.union(curr_positions)
             new_positions = self.get_pos_neighbors(curr_positions, board_size)  # discard visited locations
