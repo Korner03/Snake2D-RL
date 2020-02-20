@@ -21,7 +21,7 @@ class Linear(bp.Policy):
         self.discount_factor = DISCOUNT_FACTOR
         self.learning_rate = LEARNING_RATE
         self.weights = np.random.normal((DATA_REPR_LEN,))
-        self.max_radius = np.minimum(self.board_size[0], self.board_size[1]) / 2
+        self.max_radius = np.minimum(self.board_size[0], self.board_size[1]) // 2
 
     def get_state_action_repr(self, state, action):
         """
@@ -59,6 +59,7 @@ class Linear(bp.Policy):
         """
         min_pos_vec = [np.inf] * 11
         curr_distance = 0
+        board = state[0]
         pos, _ = state[1]
         board_size = pos.board_size
 
@@ -70,7 +71,9 @@ class Linear(bp.Policy):
             if curr_points_batch is None:
                 break
 
-            for point_val in curr_points_batch:
+            for point in curr_points_batch:
+                point_val = board[point[0], point[1]]
+                print(point_val)
                 if min_pos_vec[point_val] == np.inf:
                     min_pos_vec[point_val] = curr_distance
 
@@ -95,6 +98,7 @@ class Linear(bp.Policy):
         curr_positions = [initial_pos]
 
         for i in range(limit):
+            print(curr_positions)
             yield curr_positions
             checked_positions.union(curr_positions)
             new_positions = self.get_pos_neighbors(curr_positions, board_size)  # discard visited locations
