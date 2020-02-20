@@ -80,15 +80,15 @@ class Linear(bp.Policy):
         return min_pos_vec
 
     def get_pos_neighbors(self, curr_positions, board_size):
-        new_positions = set()
+        new_positions = []
         for pos in curr_positions:
             x, y = pos
             r = (x, (y + 1) % board_size[1])
             l = (x, (y - 1) % board_size[1])
             u = ((x - 1) % board_size[0], y)
             d = ((x + 1) % board_size[0], y)
-            new_positions.union({r, l, u, d})
-        return new_positions
+            new_positions += [r, l, u, d]
+        return set(new_positions)
 
     def pos_by_distance_iter(self, initial_pos, board_size, limit=20):
         checked_positions = set()
@@ -97,7 +97,8 @@ class Linear(bp.Policy):
         for i in range(limit):
             yield curr_positions
             checked_positions.union(curr_positions)
-            curr_positions = self.get_pos_neighbors(curr_positions, board_size).difference(checked_positions)  # discard visited locations
+            new_positions = self.get_pos_neighbors(curr_positions, board_size)  # discard visited locations
+            curr_positions = new_positions.difference(checked_positions)
             curr_positions = list(curr_positions)
         yield None
 
