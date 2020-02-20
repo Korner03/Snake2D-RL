@@ -32,6 +32,12 @@ class Linear(bp.Policy):
         """
         pass
 
+    def get_next_position(self, state, action):
+        pass
+
+    def get_object_min_pos_vector(self, state, action):
+        pass
+
     def calculate_best_action(self, state):
         """
         Calculates the best action for a given state.
