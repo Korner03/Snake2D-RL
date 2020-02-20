@@ -21,6 +21,7 @@ class Linear(bp.Policy):
         self.discount_factor = DISCOUNT_FACTOR
         self.learning_rate = LEARNING_RATE
         self.weights = np.random.normal((DATA_REPR_LEN,))
+        self.max_radius = np.minimum(self.board_size[0], self.board_size[1]) / 2
 
     def get_state_action_repr(self, state, action):
         """
@@ -48,9 +49,32 @@ class Linear(bp.Policy):
 
         return row, col
 
-
     def get_object_min_pos_vector(self, state, action):
-        pass
+        """
+        Creates a lookup table of board item and its distance according head position
+        after taking given action from given state
+        :param state:
+        :param action:
+        :return: a
+        """
+        min_pos_vec = [np.inf] * 11
+        curr_distance = 0
+        curr_points_batch = None
+        board_iter = pos_by_distance_iter(state, action, self.max_radius)
+
+        while True:
+            curr_points_batch = next(board_iter)
+            if curr_points_batch is None:
+                break
+
+            for point_val in curr_points_batch:
+                if min_pos_vec[point_val] == np.inf:
+                    min_pos_vec[point_val] = curr_distance
+
+            curr_distance += 1
+
+        assert np.inf not in min_pos_vec
+        return curr_points_batch
 
     def calculate_best_action(self, state):
         """
