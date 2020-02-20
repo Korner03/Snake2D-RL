@@ -31,7 +31,7 @@ class Linear(bp.Policy):
         :param action: the next action. one of ACTIONS defined in base class.
         :return: a vector representation of the board data relevant for the learning process.
         """
-        pass
+        return self.get_object_min_pos_vector(state, action)
 
     def get_next_position(self, state, action):
         """
