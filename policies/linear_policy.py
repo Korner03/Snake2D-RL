@@ -33,7 +33,21 @@ class Linear(bp.Policy):
         pass
 
     def get_next_position(self, state, action):
-        pass
+        """
+        Returns the coordinates of the snake's head, given that we are in a given state
+        and performed the given action.
+        :param state: State object, represents the current status on the board.
+        :param action: the next action. one of ACTIONS defined in base class.
+        :return: row and col of the next position of the snakes head in integers
+        """
+        head_pos, head_dir = state[1]
+        next_position = head_pos.move(self.TURNS[head_dir][action])
+
+        row = next_position[0]
+        col = next_position[1]
+
+        return row, col
+
 
     def get_object_min_pos_vector(self, state, action):
         pass
