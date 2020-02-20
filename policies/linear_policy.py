@@ -21,7 +21,7 @@ class Linear(bp.Policy):
         self.discount_factor = DISCOUNT_FACTOR
         self.learning_rate = LEARNING_RATE
         self.weights = np.random.normal((DATA_REPR_LEN,))
-        self.max_radius = np.minimum(self.board_size[0], self.board_size[1]) // 2
+        self.max_radius = np.minimum(self.board_size[0], self.board_size[1]) // 5
 
     def get_state_action_repr(self, state, action):
         """
@@ -79,7 +79,7 @@ class Linear(bp.Policy):
 
             curr_distance += 1
 
-        assert np.inf not in min_pos_vec
+        # assert np.inf not in min_pos_vec
         return min_pos_vec
 
     def get_pos_neighbors(self, curr_positions, board_size):
