@@ -2,12 +2,12 @@ from policies import base_policy as bp
 import numpy as np
 
 EPSILON = 0.05
+DATA_REPR_LEN = 20
 
 class Linear(bp.Policy):
     """
     A linear policy for learning the Q-function.
     """
-
     def cast_string_args(self, policy_args):
         policy_args['epsilon'] = float(policy_args['epsilon']) if 'epsilon' in policy_args else EPSILON
         return policy_args
@@ -15,6 +15,31 @@ class Linear(bp.Policy):
     def init_run(self):
         self.r_sum = 0
         self.epsilon = EPSILON
+
+        self.weights = np.random.normal((DATA_REPR_LEN,))
+
+    def get_state_action_repr(self, state, action):
+        """
+        Returns a vector representation of the board data relevant for the learning process.
+        for the given state and action.
+        :param state: State object, represents the current status on the board.
+        :param action: the next action. one of ACTIONS defined in base class.
+        :return: a vector representation of the board data relevant for the learning process.
+        """
+        pass
+
+    def calculate_best_action(self, state):
+        mx_q_val = 0
+        best_action = None
+
+        for a in list(np.random.permutation(bp.Policy.ACTIONS)):
+            sa_repr_vec = self.get_state_action_repr(state, a)
+            curr_q_val = self.weights.dot(sa_repr_vec)
+
+            if curr_q_val > mx_q_val or best_action is None:
+                mx_q_val = curr_q_val
+                best_action = a
+        return best_action
 
     def learn(self, round, prev_state, prev_action, reward, new_state, too_slow):
 
@@ -36,16 +61,10 @@ class Linear(bp.Policy):
 
     def act(self, round, prev_state, prev_action, reward, new_state, too_slow):
 
-        board, head = new_state
+        board, head = new_state  # TODO: utilize this before making best choice
         head_pos, direction = head
 
         if np.random.rand() < self.epsilon:
             return np.random.choice(bp.Policy.ACTIONS)
-
         else:
-            for a in list(np.random.permutation(bp.Policy.ACTIONS)):
-                # implement code here
-                pass
-
-            # if all positions are bad:
-            return np.random.choice(bp.Policy.ACTION)
+            return self.calculate_best_action(new_state)
