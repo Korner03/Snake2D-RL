@@ -1,7 +1,7 @@
 from policies import base_policy as bp
 import numpy as np
 
-EPSILON = 0.05
+EPSILON = 0.1
 DATA_REPR_LEN = 33
 DISCOUNT_FACTOR = 0.4
 LEARNING_RATE = 0.15
@@ -12,6 +12,7 @@ class Linear(bp.Policy):
     """
     A linear policy for learning the Q-function.
     """
+
     def cast_string_args(self, policy_args):
         policy_args['epsilon'] = float(policy_args['epsilon']) if 'epsilon' in policy_args else EPSILON
         return policy_args
@@ -66,13 +67,13 @@ class Linear(bp.Policy):
 
         prev_pos = self.get_next_position(state, action)
         curr_dir = self.TURNS[head_dir][action]
-        neighbours = self.get_pos_neighbors(prev_pos, board_size, direction=curr_dir)
+        neighbours = self.get_pos_neighbors([prev_pos], board_size, direction=curr_dir)
 
-        for pos, i in enumerate(neighbours):
-            curr_distance = 0
+        for i, pos in enumerate(neighbours):
+            curr_distance = 1
             board_iter = self.pos_by_distance_iter(pos, prev_pos, board_size, self.max_radius)
 
-            while True:
+            while curr_distance < self.max_radius:
                 curr_points_batch = next(board_iter)
                 if curr_points_batch is None:
                     break
@@ -85,7 +86,11 @@ class Linear(bp.Policy):
                 curr_distance += 1
 
         # assert np.inf not in min_pos_vec
-        return np.array(min_pos_vec).flatten()
+        res = np.array(min_pos_vec).flatten()
+        # np.where(res == 0, 1.0, res)
+        res = 1 / res
+        res += 1
+        return res
 
     def get_pos_neighbors(self, curr_positions, board_size, direction=None):
         new_positions = []
@@ -140,16 +145,17 @@ class Linear(bp.Policy):
             if curr_q_val > mx_q_val or best_action is None:
                 mx_q_val = curr_q_val
                 best_action = a
+
         return best_action
 
     def learn(self, round, prev_state, prev_action, reward, new_state, too_slow):
 
         # implemet code here... keep rest of code
 
-        if round > 3000:
+        if round > 4000:
             self.epsilon = 0
         else:
-            self.epsilon = -np.power(round/3000, 0.5) + 1
+            self.epsilon = -np.power(round / 4000, 0.5) + 1
 
         best_future_action = self.calculate_best_action(new_state)
         future_opt_state_repr = self.get_state_action_repr(new_state, best_future_action)
@@ -157,9 +163,12 @@ class Linear(bp.Policy):
 
         post_action_state_repr = self.get_state_action_repr(prev_state, prev_action)
         post_action_q_val = self.weights.dot(post_action_state_repr)
-
-        prediction_error = reward + self.discount_factor * future_opt_q_val - post_action_q_val
-        self.weights -= self.learning_rate * prediction_error * post_action_state_repr
+        #prediction_error = reward + self.discount_factor * future_opt_q_val - post_action_q_val
+        self.weights = self.weights - self.learning_rate * \
+                       np.multiply((post_action_q_val - (reward + self.discount_factor * future_opt_q_val)),
+                                   post_action_state_repr)
+        # print(post_action_q_val)
+        #self.weights -= self.learning_rate * prediction_error * post_action_state_repr
 
         try:
             if round % 100 == 0:
