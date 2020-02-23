@@ -1,10 +1,10 @@
 from policies import base_policy as bp
 import numpy as np
 
-EPSILON = 0.05
+EPSILON = 0.1
 DATA_REPR_LEN = 11
-DISCOUNT_FACTOR = 0.98
-LEARNING_RATE = 0.05
+DISCOUNT_FACTOR = 0.4
+LEARNING_RATE = 0.15
 
 
 class Linear(bp.Policy):
@@ -21,7 +21,7 @@ class Linear(bp.Policy):
         self.discount_factor = DISCOUNT_FACTOR
         self.learning_rate = LEARNING_RATE
         self.weights = np.random.randn(DATA_REPR_LEN)
-        self.max_radius = np.minimum(self.board_size[0], self.board_size[1]) // 5
+        self.max_radius = 10 # np.minimum(self.board_size[0], self.board_size[1]) // 20
 
     def get_state_action_repr(self, state, action):
         """
@@ -79,6 +79,7 @@ class Linear(bp.Policy):
             curr_distance += 1
 
         # assert np.inf not in min_pos_vec
+        print(min_pos_vec)
         return np.array(min_pos_vec)
 
     def get_pos_neighbors(self, curr_positions, board_size):
@@ -125,6 +126,10 @@ class Linear(bp.Policy):
     def learn(self, round, prev_state, prev_action, reward, new_state, too_slow):
 
         # implemet code here... keep rest of code
+        if round > 3000:
+            self.epsilon = 0
+        else:
+            self.epsilon = -np.power(round/3000, 0.5) + 1
 
         best_future_action = self.calculate_best_action(new_state)
         future_opt_state_repr = self.get_state_action_repr(new_state, best_future_action)
