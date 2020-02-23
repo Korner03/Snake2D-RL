@@ -2,7 +2,7 @@ from policies import base_policy as bp
 import numpy as np
 
 EPSILON = 0.1
-DATA_REPR_LEN = 11
+DATA_REPR_LEN = 33
 DISCOUNT_FACTOR = 0.4
 LEARNING_RATE = 0.15
 
@@ -79,8 +79,7 @@ class Linear(bp.Policy):
             curr_distance += 1
 
         # assert np.inf not in min_pos_vec
-        print(min_pos_vec)
-        return np.array(min_pos_vec)
+        return np.array(min_pos_vec).flatten()
 
     def get_pos_neighbors(self, curr_positions, board_size):
         new_positions = []
