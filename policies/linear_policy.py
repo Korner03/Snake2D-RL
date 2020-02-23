@@ -66,9 +66,9 @@ class Linear(bp.Policy):
 
         prev_pos = self.get_next_position(state, action)
         curr_dir = self.TURNS[head_dir][action]
-        neighbours = self.get_pos_neighbors(prev_pos, board_size, direction=curr_dir)
+        neighbours = self.get_pos_neighbors([prev_pos], board_size, direction=curr_dir)
 
-        for pos, i in enumerate(neighbours):
+        for i, pos in enumerate(neighbours):
             curr_distance = 0
             board_iter = self.pos_by_distance_iter(pos, prev_pos, board_size, self.max_radius)
 
