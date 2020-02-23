@@ -1,10 +1,11 @@
 from policies import base_policy as bp
 import numpy as np
 
-EPSILON = 0.1
+EPSILON = 0.05
 DATA_REPR_LEN = 33
 DISCOUNT_FACTOR = 0.4
 LEARNING_RATE = 0.15
+MAX_RADIUS = 10
 
 
 class Linear(bp.Policy):
@@ -21,7 +22,7 @@ class Linear(bp.Policy):
         self.discount_factor = DISCOUNT_FACTOR
         self.learning_rate = LEARNING_RATE
         self.weights = np.random.randn(DATA_REPR_LEN)
-        self.max_radius = 10 # np.minimum(self.board_size[0], self.board_size[1]) // 20
+        self.max_radius = MAX_RADIUS
 
     def get_state_action_repr(self, state, action):
         """
@@ -57,31 +58,36 @@ class Linear(bp.Policy):
         :param action:
         :return: a
         """
-        min_pos_vec = [self.max_radius] * 11
-        curr_distance = 0
+        min_pos_vec = np.full((3, 11), self.max_radius)
+
         board = state[0]
-        pos, _ = state[1]
+        pos, head_dir = state[1]
         board_size = pos.board_size
 
-        initial_pos = self.get_next_position(state, action)
-        board_iter = self.pos_by_distance_iter(initial_pos, board_size, self.max_radius)
+        prev_pos = self.get_next_position(state, action)
+        curr_dir = self.TURNS[head_dir][action]
+        neighbours = self.get_pos_neighbors(prev_pos, board_size, direction=curr_dir)
 
-        while True:
-            curr_points_batch = next(board_iter)
-            if curr_points_batch is None:
-                break
+        for pos, i in enumerate(neighbours):
+            curr_distance = 0
+            board_iter = self.pos_by_distance_iter(pos, prev_pos, board_size, self.max_radius)
 
-            for point in curr_points_batch:
-                point_val = board[point[0], point[1]]
-                if min_pos_vec[point_val] == self.max_radius:
-                    min_pos_vec[point_val] = curr_distance
+            while True:
+                curr_points_batch = next(board_iter)
+                if curr_points_batch is None:
+                    break
 
-            curr_distance += 1
+                for point in curr_points_batch:
+                    point_val = board[point[0], point[1]]
+                    if min_pos_vec[i][point_val] == self.max_radius:
+                        min_pos_vec[i][point_val] = curr_distance
+
+                curr_distance += 1
 
         # assert np.inf not in min_pos_vec
         return np.array(min_pos_vec).flatten()
 
-    def get_pos_neighbors(self, curr_positions, board_size):
+    def get_pos_neighbors(self, curr_positions, board_size, direction=None):
         new_positions = []
         for pos in curr_positions:
             x, y = pos
@@ -89,17 +95,31 @@ class Linear(bp.Policy):
             l = (x, (y - 1) % board_size[1])
             u = ((x - 1) % board_size[0], y)
             d = ((x + 1) % board_size[0], y)
-            new_positions += [r, l, u, d]
-        return set(new_positions)
+            if direction is None:
+                new_positions += [l, u, r, d]
 
-    def pos_by_distance_iter(self, initial_pos, board_size, limit=20):
-        checked_positions = set()
-        curr_positions = [initial_pos]
+            elif direction == 'N':
+                new_positions += [l, u, r]
+
+            elif direction == 'E':
+                new_positions += [u, r, d]
+
+            elif direction == 'S':
+                new_positions += [r, d, l]
+
+            elif direction == 'W':
+                new_positions += [d, l, u]
+
+        return list(set(new_positions))
+
+    def pos_by_distance_iter(self, curr_pos, prev_pos, board_size, limit=20):
+        checked_positions = {prev_pos}
+        curr_positions = [curr_pos]
 
         for i in range(limit):
             yield curr_positions
             checked_positions.union(curr_positions)
-            new_positions = self.get_pos_neighbors(curr_positions, board_size)  # discard visited locations
+            new_positions = set(self.get_pos_neighbors(curr_positions, board_size))  # discard visited locations
             curr_positions = new_positions.difference(checked_positions)
             curr_positions = list(curr_positions)
         yield None
@@ -125,6 +145,7 @@ class Linear(bp.Policy):
     def learn(self, round, prev_state, prev_action, reward, new_state, too_slow):
 
         # implemet code here... keep rest of code
+
         if round > 3000:
             self.epsilon = 0
         else:
