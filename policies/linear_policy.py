@@ -2,10 +2,10 @@ from policies import base_policy as bp
 import numpy as np
 
 EPSILON = 0.1
-DATA_REPR_LEN = 56
+DATA_REPR_LEN = 45
 DISCOUNT_FACTOR = 0.4
 LEARNING_RATE = 0.15
-MAX_RADIUS = 10
+MAX_RADIUS = 2
 
 
 class Linear(bp.Policy):
@@ -29,6 +29,8 @@ class Linear(bp.Policy):
         self.learning_rate = LEARNING_RATE
         self.weights = np.random.randn(DATA_REPR_LEN)
         self.max_radius = MAX_RADIUS
+        self.learning_duration = self.game_duration - self.score_scope
+
 
     def get_state_action_repr(self, state, action):
         """
@@ -40,9 +42,9 @@ class Linear(bp.Policy):
         """
         area_reper = self.get_one_hot_objects(state, action)
         dist_repr = self.get_object_min_pos_vector(state, action)
-        repr = np.append(area_reper, dist_repr)
-        repr = np.append(repr, np.array([1]))
-        return repr
+        final_repr = np.append(area_reper, dist_repr)
+        final_repr = np.append(final_repr, np.array([1]))
+        return final_repr
 
     def get_next_position(self, state, action):
         """
@@ -81,7 +83,7 @@ class Linear(bp.Policy):
 
         # for i, pos in enumerate(neighbours):
         curr_distance = 1
-        board_iter = self.pos_by_distance_iter(next_pos, prev_pos, board_size, self.max_radius)
+        board_iter = self.pos_by_distance_iter(next_pos, prev_pos, board_size)
 
         while curr_distance < self.max_radius:
             curr_points_batch = next(board_iter)
@@ -99,21 +101,37 @@ class Linear(bp.Policy):
         res = np.array(min_pos_vec).flatten()
         return 1 / res
 
+
     def get_one_hot_objects(self, state, action):
+        """
+        returns a one hor representation of all possible 11 values on board for the 3 "next step"
+        positions.
+        :param state:
+        :param action:
+        :return:
+        """
         board = state[0]
         pos, head_dir = state[1]
         board_size = pos.board_size
         curr_pos = pos.pos
 
-        area_repr = np.zeros((4, 11))
+        area_repr = np.zeros((3, 11))
         true_dir = self.TURNS[head_dir][action]
         neighbors = self.get_pos_neighbors([curr_pos], board_size, direction=true_dir)
 
-        for i, pos in enumerate([curr_pos] + neighbors):
+        for i, pos in enumerate(neighbors):
             area_repr[i][board[pos[0], pos[1]]] = 1
         return area_repr.flatten()
 
     def get_pos_neighbors(self, curr_positions, board_size, direction=None):
+        """
+        returns the coordinates on board of the neighbors of the given pos. if direction is given
+        the previous pos neighbor will not be included.
+        :param curr_positions:
+        :param board_size:
+        :param direction:
+        :return:
+        """
         new_positions = []
         for pos in curr_positions:
             x, y = pos
@@ -138,11 +156,19 @@ class Linear(bp.Policy):
 
         return list(set(new_positions))
 
-    def pos_by_distance_iter(self, curr_pos, prev_pos, board_size, limit=20):
+    def pos_by_distance_iter(self, curr_pos, prev_pos, board_size):
+        """
+        A generator function which returns on the i'th next() call all of the neighbors of distance
+        i - 1 if curr_pos. the prev pos argument is a position which is not relevant
+        :param curr_pos:
+        :param prev_pos:
+        :param board_size:
+        :return:
+        """
         checked_positions = {prev_pos}
         curr_positions = [curr_pos]
 
-        for i in range(limit):
+        for i in range(int(self.max_radius)):
             yield curr_positions
             checked_positions.union(curr_positions)
             new_positions = set(self.get_pos_neighbors(curr_positions, board_size))  # discard visited locations
@@ -170,25 +196,12 @@ class Linear(bp.Policy):
         return best_action, mx_q_val
 
     def learn(self, round, prev_state, prev_action, reward, new_state, too_slow):
-
-        # update epsilon
-        # last_learning_round = 4000
-        # self.epsilon = -np.power(round / last_learning_round, 0.5) + 1
-        #
-        # _, best_new_Q_val = self.calculate_best_action(new_state)
-        # state_repr = self.get_state_action_repr(prev_state, prev_action)
-        #
-        # # cur_a_weights = self.weights
-        # cur_Q_val = np.dot(state_repr, self.weights)
-        #
-        # self.weights = self.weights - self.learning_rate * \
-        #                np.multiply((cur_Q_val - (reward + 0.4 * best_new_Q_val)),
-        #                            state_repr)
-
-        if round > 4000:
+        if round > self.learning_duration:
             self.epsilon = 0
         else:
-            self.epsilon = -np.power(round / 4000, 0.5) + 1
+            self.epsilon = -np.power(round / self.learning_duration, 0.5) + 1
+            # self.epsilon = -round / self.learning_duration + 1
+            # self.max_radius = self.max_radius - self.radius_decay
 
         best_future_action, future_opt_q_val = self.calculate_best_action(new_state)
         future_opt_state_repr = self.get_state_action_repr(new_state, best_future_action)
@@ -205,6 +218,7 @@ class Linear(bp.Policy):
 
         try:
             if round % 100 == 0:
+                # print("radious: ", self.max_radius)
                 if round > self.game_duration - self.score_scope:
                     self.log("Rewards in last 100 rounds which counts towards the score: " + str(self.r_sum), 'VALUE')
                 else:
@@ -218,9 +232,6 @@ class Linear(bp.Policy):
             self.log(e, 'EXCEPTION')
 
     def act(self, round, prev_state, prev_action, reward, new_state, too_slow):
-
-        board, head = new_state  # TODO: utilize this before making best choice
-        head_pos, direction = head
 
         if np.random.rand() < self.epsilon:
             return np.random.choice(bp.Policy.ACTIONS)
