@@ -114,10 +114,11 @@ class Linear(bp.Policy):
         pos, head_dir = state[1]
         board_size = pos.board_size
         curr_pos = pos.pos
+        next_position = pos.move(self.TURNS[head_dir][action])
 
         area_repr = np.zeros((3, 11))
         true_dir = self.TURNS[head_dir][action]
-        neighbors = self.get_pos_neighbors([curr_pos], board_size, direction=true_dir)
+        neighbors = self.get_pos_neighbors([next_position], board_size, direction=true_dir)
 
         for i, pos in enumerate(neighbors):
             area_repr[i][board[pos[0], pos[1]]] = 1
