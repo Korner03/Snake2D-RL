@@ -2,7 +2,7 @@ from policies import base_policy as bp
 import numpy as np
 
 EPSILON = 0.1
-DATA_REPR_LEN = 45
+REPR_LEN = 45
 DISCOUNT_FACTOR = 0.4
 LEARNING_RATE = 0.15
 MAX_RADIUS = 2
@@ -27,7 +27,7 @@ class Linear(bp.Policy):
         self.epsilon = EPSILON
         self.discount_factor = DISCOUNT_FACTOR
         self.learning_rate = LEARNING_RATE
-        self.weights = np.random.randn(DATA_REPR_LEN)
+        self.weights = np.random.randn(REPR_LEN)
         self.max_radius = MAX_RADIUS
         self.learning_duration = self.game_duration - self.score_scope
 
@@ -113,7 +113,6 @@ class Linear(bp.Policy):
         board = state[0]
         pos, head_dir = state[1]
         board_size = pos.board_size
-        curr_pos = pos.pos
         next_position = pos.move(self.TURNS[head_dir][action])
 
         area_repr = np.zeros((3, 11))
@@ -201,25 +200,16 @@ class Linear(bp.Policy):
             self.epsilon = 0
         else:
             self.epsilon = -np.power(round / self.learning_duration, 0.5) + 1
-            # self.epsilon = -round / self.learning_duration + 1
-            # self.max_radius = self.max_radius - self.radius_decay
 
         best_future_action, future_opt_q_val = self.calculate_best_action(new_state)
-        future_opt_state_repr = self.get_state_action_repr(new_state, best_future_action)
-        # future_opt_q_val = self.weights.dot(future_opt_state_repr)
-
         post_action_state_repr = self.get_state_action_repr(prev_state, prev_action)
         post_action_q_val = self.weights.dot(post_action_state_repr)
-        #prediction_error = reward + self.discount_factor * future_opt_q_val - post_action_q_val
         self.weights = self.weights - self.learning_rate * \
                        np.multiply((post_action_q_val - (reward + self.discount_factor * future_opt_q_val)),
                                    post_action_state_repr)
-        # print(post_action_q_val)
-        #self.weights -= self.learning_rate * prediction_error * post_action_state_repr
 
         try:
             if round % 100 == 0:
-                # print("radious: ", self.max_radius)
                 if round > self.game_duration - self.score_scope:
                     self.log("Rewards in last 100 rounds which counts towards the score: " + str(self.r_sum), 'VALUE')
                 else:
@@ -233,6 +223,16 @@ class Linear(bp.Policy):
             self.log(e, 'EXCEPTION')
 
     def act(self, round, prev_state, prev_action, reward, new_state, too_slow):
+        """
+        Choose the best action based on the Q-function output. make a random move with probability epsilon.
+        :param round: round number
+        :param prev_state: not in use
+        :param prev_action: not in use
+        :param reward: not in use.
+        :param new_state: the new state repr object.
+        :param too_slow:
+        :return:
+        """
 
         if np.random.rand() < self.epsilon:
             return np.random.choice(bp.Policy.ACTIONS)

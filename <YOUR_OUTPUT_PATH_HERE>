@@ -1,0 +1,349 @@
+Using TensorFlow backend.
+0::0:1:0	1	VALUE	Rewards in last 100 rounds: 0
+0::0:1:0	2	VALUE	Rewards in last 100 rounds: -5
+0::0:1:0	0	VALUE	Rewards in last 100 rounds: -10
+0::0:1:1	2	VALUE	Rewards in last 100 rounds: -5
+0::0:1:1	1	VALUE	Rewards in last 100 rounds: -1
+0::0:1:1	0	VALUE	Rewards in last 100 rounds: 0
+0::0:1:2	1	VALUE	Rewards in last 100 rounds: 5
+0::0:1:2	2	VALUE	Rewards in last 100 rounds: 0
+0::0:1:2	0	VALUE	Rewards in last 100 rounds: -5
+0::0:1:3	2	VALUE	Rewards in last 100 rounds: -1
+0::0:1:3	1	VALUE	Rewards in last 100 rounds: 0
+0::0:1:3	0	VALUE	Rewards in last 100 rounds: -10
+0::0:1:4	1	VALUE	Rewards in last 100 rounds: 0
+0::0:1:4	2	VALUE	Rewards in last 100 rounds: 0
+0::0:1:4	0	VALUE	Rewards in last 100 rounds: -5
+0::0:1:5	1	VALUE	Rewards in last 100 rounds: 0
+0::0:1:5	2	VALUE	Rewards in last 100 rounds: 2
+0::0:1:5	0	VALUE	Rewards in last 100 rounds: -1
+0::0:1:6	2	VALUE	Rewards in last 100 rounds: 0
+0::0:1:6	1	VALUE	Rewards in last 100 rounds: 0
+0::0:1:6	0	VALUE	Rewards in last 100 rounds: 0
+0::0:1:7	1	VALUE	Rewards in last 100 rounds: -11
+0::0:1:7	2	VALUE	Rewards in last 100 rounds: -1
+0::0:1:7	0	VALUE	Rewards in last 100 rounds: 0
+0::0:1:7	2	VALUE	Rewards in last 100 rounds: 0
+0::0:1:7	1	VALUE	Rewards in last 100 rounds: 0
+0::0:1:7	0	VALUE	Rewards in last 100 rounds: 0
+0::0:1:8	1	VALUE	Rewards in last 100 rounds: 0
+0::0:1:8	2	VALUE	Rewards in last 100 rounds: 2
+0::0:1:8	0	VALUE	Rewards in last 100 rounds: 0
+0::0:1:9	2	VALUE	Rewards in last 100 rounds: 0
+0::0:1:9	1	VALUE	Rewards in last 100 rounds: 5
+0::0:1:9	0	VALUE	Rewards in last 100 rounds: 0
+0::0:1:10	2	VALUE	Rewards in last 100 rounds: -1
+0::0:1:10	1	VALUE	Rewards in last 100 rounds: 0
+0::0:1:10	0	VALUE	Rewards in last 100 rounds: 0
+0::0:1:11	2	VALUE	Rewards in last 100 rounds: 0
+0::0:1:11	1	VALUE	Rewards in last 100 rounds: 0
+0::0:1:11	0	VALUE	Rewards in last 100 rounds: -10
+0::0:1:12	2	VALUE	Rewards in last 100 rounds: 0
+0::0:1:12	1	VALUE	Rewards in last 100 rounds: -2
+0::0:1:12	0	VALUE	Rewards in last 100 rounds: 0
+0::0:1:13	2	VALUE	Rewards in last 100 rounds: 0
+0::0:1:13	1	VALUE	Rewards in last 100 rounds: 4
+0::0:1:13	0	VALUE	Rewards in last 100 rounds: 5
+0::0:1:14	1	VALUE	Rewards in last 100 rounds: 4
+0::0:1:14	2	VALUE	Rewards in last 100 rounds: 2
+0::0:1:14	0	VALUE	Rewards in last 100 rounds: 0
+0::0:1:15	1	VALUE	Rewards in last 100 rounds: 4
+0::0:1:15	2	VALUE	Rewards in last 100 rounds: 0
+0::0:1:15	0	VALUE	Rewards in last 100 rounds: 0
+0::0:1:15	2	VALUE	Rewards in last 100 rounds: -1
+0::0:1:15	1	VALUE	Rewards in last 100 rounds: 0
+0::0:1:15	0	VALUE	Rewards in last 100 rounds: 0
+0::0:1:16	1	VALUE	Rewards in last 100 rounds: 2
+0::0:1:16	2	VALUE	Rewards in last 100 rounds: -6
+0::0:1:16	0	VALUE	Rewards in last 100 rounds: 0
+0::0:1:17	2	VALUE	Rewards in last 100 rounds: 0
+0::0:1:17	1	VALUE	Rewards in last 100 rounds: 4
+0::0:1:17	0	VALUE	Rewards in last 100 rounds: 0
+0::0:1:18	1	VALUE	Rewards in last 100 rounds: 0
+0::0:1:18	2	VALUE	Rewards in last 100 rounds: 0
+0::0:1:18	0	VALUE	Rewards in last 100 rounds: -5
+0::0:1:19	2	VALUE	Rewards in last 100 rounds: 2
+0::0:1:19	1	VALUE	Rewards in last 100 rounds: 0
+0::0:1:19	0	VALUE	Rewards in last 100 rounds: 0
+0::0:1:20	2	VALUE	Rewards in last 100 rounds: 5
+0::0:1:20	1	VALUE	Rewards in last 100 rounds: 0
+0::0:1:20	0	VALUE	Rewards in last 100 rounds: -5
+0::0:1:21	2	VALUE	Rewards in last 100 rounds: -1
+0::0:1:21	1	VALUE	Rewards in last 100 rounds: 5
+0::0:1:21	0	VALUE	Rewards in last 100 rounds: 2
+0::0:1:22	1	VALUE	Rewards in last 100 rounds: 0
+0::0:1:22	2	VALUE	Rewards in last 100 rounds: 5
+0::0:1:22	0	VALUE	Rewards in last 100 rounds: 0
+0::0:1:22	2	VALUE	Rewards in last 100 rounds: 0
+0::0:1:22	1	VALUE	Rewards in last 100 rounds: 2
+0::0:1:22	0	VALUE	Rewards in last 100 rounds: 0
+0::0:1:23	2	VALUE	Rewards in last 100 rounds: -5
+0::0:1:23	1	VALUE	Rewards in last 100 rounds: 2
+0::0:1:23	0	VALUE	Rewards in last 100 rounds: -9
+0::0:1:24	1	VALUE	Rewards in last 100 rounds: 0
+0::0:1:24	2	VALUE	Rewards in last 100 rounds: 0
+0::0:1:24	0	VALUE	Rewards in last 100 rounds: 5
+0::0:1:25	1	VALUE	Rewards in last 100 rounds: 5
+0::0:1:25	2	VALUE	Rewards in last 100 rounds: 0
+0::0:1:25	0	VALUE	Rewards in last 100 rounds: -1
+0::0:1:26	2	VALUE	Rewards in last 100 rounds: 0
+0::0:1:26	1	VALUE	Rewards in last 100 rounds: 0
+0::0:1:26	0	VALUE	Rewards in last 100 rounds: 2
+0::0:1:27	2	VALUE	Rewards in last 100 rounds: 4
+0::0:1:27	1	VALUE	Rewards in last 100 rounds: 5
+0::0:1:27	0	VALUE	Rewards in last 100 rounds: 0
+0::0:1:28	2	VALUE	Rewards in last 100 rounds: 5
+0::0:1:28	1	VALUE	Rewards in last 100 rounds: 2
+0::0:1:28	0	VALUE	Rewards in last 100 rounds: -5
+0::0:1:29	1	VALUE	Rewards in last 100 rounds: 5
+0::0:1:29	2	VALUE	Rewards in last 100 rounds: 7
+0::0:1:29	0	VALUE	Rewards in last 100 rounds: 2
+0::0:1:29	1	VALUE	Rewards in last 100 rounds: -3
+0::0:1:29	2	VALUE	Rewards in last 100 rounds: -4
+0::0:1:29	0	VALUE	Rewards in last 100 rounds: 2
+0::0:1:30	1	VALUE	Rewards in last 100 rounds: -1
+0::0:1:30	2	VALUE	Rewards in last 100 rounds: 0
+0::0:1:30	0	VALUE	Rewards in last 100 rounds: 5
+0::0:1:31	1	VALUE	Rewards in last 100 rounds: 1
+0::0:1:31	2	VALUE	Rewards in last 100 rounds: 5
+0::0:1:31	0	VALUE	Rewards in last 100 rounds: 12
+0::0:1:32	2	VALUE	Rewards in last 100 rounds: -1
+0::0:1:32	1	VALUE	Rewards in last 100 rounds: -3
+0::0:1:32	0	VALUE	Rewards in last 100 rounds: 10
+0::0:1:33	1	VALUE	Rewards in last 100 rounds: 12
+0::0:1:33	2	VALUE	Rewards in last 100 rounds: 1
+0::0:1:33	0	VALUE	Rewards in last 100 rounds: 8
+0::0:1:34	2	VALUE	Rewards in last 100 rounds: -4
+0::0:1:34	1	VALUE	Rewards in last 100 rounds: 3
+0::0:1:34	0	VALUE	Rewards in last 100 rounds: 5
+0::0:1:35	2	VALUE	Rewards in last 100 rounds: 0
+0::0:1:35	1	VALUE	Rewards in last 100 rounds: 14
+0::0:1:35	0	VALUE	Rewards in last 100 rounds: 15
+0::0:1:36	2	VALUE	Rewards in last 100 rounds which counts towards the score: -7
+0::0:1:36	1	VALUE	Rewards in last 100 rounds which counts towards the score: 0
+0::0:1:36	0	VALUE	Rewards in last 100 rounds which counts towards the score: 2
+0::0:1:36	1	VALUE	Rewards in last 100 rounds which counts towards the score: -2
+0::0:1:36	2	VALUE	Rewards in last 100 rounds which counts towards the score: 4
+0::0:1:36	0	VALUE	Rewards in last 100 rounds which counts towards the score: 0
+0::0:1:37	1	VALUE	Rewards in last 100 rounds which counts towards the score: 4
+0::0:1:37	2	VALUE	Rewards in last 100 rounds which counts towards the score: -1
+0::0:1:37	0	VALUE	Rewards in last 100 rounds which counts towards the score: 5
+0::0:1:38	2	VALUE	Rewards in last 100 rounds which counts towards the score: 0
+0::0:1:38	1	VALUE	Rewards in last 100 rounds which counts towards the score: 7
+0::0:1:38	0	VALUE	Rewards in last 100 rounds which counts towards the score: 2
+0::0:1:39	2	VALUE	Rewards in last 100 rounds which counts towards the score: 0
+0::0:1:39	1	VALUE	Rewards in last 100 rounds which counts towards the score: -1
+0::0:1:39	0	VALUE	Rewards in last 100 rounds which counts towards the score: 0
+0::0:1:40	1	VALUE	Rewards in last 100 rounds which counts towards the score: -1
+0::0:1:40	2	VALUE	Rewards in last 100 rounds which counts towards the score: 0
+0::0:1:40	0	VALUE	Rewards in last 100 rounds which counts towards the score: 7
+0::0:1:41	2	VALUE	Rewards in last 100 rounds which counts towards the score: 3
+0::0:1:41	1	VALUE	Rewards in last 100 rounds which counts towards the score: 1
+0::0:1:41	0	VALUE	Rewards in last 100 rounds which counts towards the score: 5
+0::0:1:42	1	VALUE	Rewards in last 100 rounds which counts towards the score: 2
+0::0:1:42	2	VALUE	Rewards in last 100 rounds which counts towards the score: -1
+0::0:1:42	0	VALUE	Rewards in last 100 rounds which counts towards the score: 2
+0::0:1:42	0	ERROR	No Response: player took too long to respond with action. This is No Response #1 in a row!
+0::0:1:43	2	VALUE	Rewards in last 100 rounds which counts towards the score: 3
+0::0:1:43	1	VALUE	Rewards in last 100 rounds which counts towards the score: 2
+0::0:1:43	0	VALUE	Rewards in last 100 rounds which counts towards the score: 17
+At Round 100 the scores are:
+Player 1: -0.2500
+Player 2: 0.0200
+Player 3: 0.0000
+At Round 200 the scores are:
+Player 1: -0.2750
+Player 2: 0.0300
+Player 3: -0.0250
+At Round 300 the scores are:
+Player 1: -0.2500
+Player 2: 0.0700
+Player 3: -0.0200
+At Round 400 the scores are:
+Player 1: -0.2325
+Player 2: 0.0525
+Player 3: -0.0175
+At Round 500 the scores are:
+Player 1: -0.2160
+Player 2: 0.0420
+Player 3: 0.0040
+At Round 600 the scores are:
+Player 1: -0.1983
+Player 2: 0.0433
+Player 3: -0.0017
+At Round 700 the scores are:
+Player 1: -0.1771
+Player 2: 0.0443
+Player 3: 0.0157
+At Round 800 the scores are:
+Player 1: -0.1713
+Player 2: 0.0262
+Player 3: 0.0187
+At Round 900 the scores are:
+Player 1: -0.1578
+Player 2: 0.0233
+Player 3: 0.0156
+At Round 1000 the scores are:
+Player 1: -0.1400
+Player 2: 0.0210
+Player 3: 0.0170
+At Round 1100 the scores are:
+Player 1: -0.1230
+Player 2: 0.0280
+Player 3: 0.0170
+At Round 1200 the scores are:
+Player 1: -0.1110
+Player 2: 0.0140
+Player 3: 0.0230
+At Round 1300 the scores are:
+Player 1: -0.1090
+Player 2: 0.0040
+Player 3: 0.0270
+At Round 1400 the scores are:
+Player 1: -0.1010
+Player 2: 0.0110
+Player 3: 0.0280
+At Round 1500 the scores are:
+Player 1: -0.1000
+Player 2: 0.0270
+Player 3: 0.0290
+At Round 1600 the scores are:
+Player 1: -0.1040
+Player 2: 0.0260
+Player 3: 0.0410
+At Round 1700 the scores are:
+Player 1: -0.0990
+Player 2: 0.0320
+Player 3: 0.0460
+At Round 1800 the scores are:
+Player 1: -0.0910
+Player 2: 0.0420
+Player 3: 0.0340
+At Round 1900 the scores are:
+Player 1: -0.0860
+Player 2: 0.0390
+Player 3: 0.0320
+At Round 2000 the scores are:
+Player 1: -0.0880
+Player 2: 0.0410
+Player 3: 0.0340
+At Round 2100 the scores are:
+Player 1: -0.1060
+Player 2: 0.0270
+Player 3: 0.0290
+At Round 2200 the scores are:
+Player 1: -0.0890
+Player 2: 0.0380
+Player 3: 0.0260
+At Round 2300 the scores are:
+Player 1: -0.0690
+Player 2: 0.0340
+Player 3: 0.0400
+At Round 2400 the scores are:
+Player 1: -0.0580
+Player 2: 0.0420
+Player 3: 0.0340
+At Round 2500 the scores are:
+Player 1: -0.0490
+Player 2: 0.0350
+Player 3: 0.0290
+At Round 2600 the scores are:
+Player 1: -0.0340
+Player 2: 0.0310
+Player 3: 0.0300
+At Round 2700 the scores are:
+Player 1: -0.0430
+Player 2: 0.0380
+Player 3: 0.0170
+At Round 2800 the scores are:
+Player 1: -0.0330
+Player 2: 0.0430
+Player 3: 0.0280
+At Round 2900 the scores are:
+Player 1: -0.0390
+Player 2: 0.0520
+Player 3: 0.0380
+At Round 3000 the scores are:
+Player 1: -0.0450
+Player 2: 0.0630
+Player 3: 0.0460
+At Round 3100 the scores are:
+Player 1: -0.0200
+Player 2: 0.0820
+Player 3: 0.0620
+At Round 3200 the scores are:
+Player 1: -0.0290
+Player 2: 0.0860
+Player 3: 0.0730
+At Round 3300 the scores are:
+Player 1: -0.0290
+Player 2: 0.1010
+Player 3: 0.0630
+At Round 3400 the scores are:
+Player 1: -0.0260
+Player 2: 0.0900
+Player 3: 0.0750
+At Round 3500 the scores are:
+Player 1: -0.0090
+Player 2: 0.0790
+Player 3: 0.0690
+At Round 3600 the scores are:
+Player 1: 0.0200
+Player 2: 0.0940
+Player 3: 0.0700
+At Round 3700 the scores are:
+Player 1: 0.0490
+Player 2: 0.0870
+Player 3: 0.0750
+At Round 3800 the scores are:
+Player 1: 0.0640
+Player 2: 0.1090
+Player 3: 0.0840
+At Round 3900 the scores are:
+Player 1: 0.0900
+Player 2: 0.1000
+Player 3: 0.0850
+At Round 4000 the scores are:
+Player 1: 0.1400
+Player 2: 0.0940
+Player 3: 0.0910
+At Round 4100 the scores are:
+Player 1: 0.1590
+Player 2: 0.0890
+Player 3: 0.0830
+At Round 4200 the scores are:
+Player 1: 0.1620
+Player 2: 0.0920
+Player 3: 0.0740
+At Round 4300 the scores are:
+Player 1: 0.1960
+Player 2: 0.0880
+Player 3: 0.0700
+At Round 4400 the scores are:
+Player 1: 0.2180
+Player 2: 0.0950
+Player 3: 0.0670
+At Round 4500 the scores are:
+Player 1: 0.2170
+Player 2: 0.1240
+Player 3: 0.0720
+At Round 4600 the scores are:
+Player 1: 0.1900
+Player 2: 0.1180
+Player 3: 0.0830
+At Round 4700 the scores are:
+Player 1: 0.2000
+Player 2: 0.1040
+Player 3: 0.0830
+At Round 4800 the scores are:
+Player 1: 0.2100
+Player 2: 0.0870
+Player 3: 0.0760
+At Round 4900 the scores are:
+Player 1: 0.2240
+Player 2: 0.0920
+Player 3: 0.0860
+At Round 5000 the scores are:
+Player 1: 0.2110
+Player 2: 0.0880
+Player 3: 0.0710
